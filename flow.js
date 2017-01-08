@@ -32,10 +32,10 @@ module.exports = flow
 
 function ifAttribute (show) {
   if (show && !this[secret.showing]) {
-    dom.insertContent(elem)
+    dom.insertContent(this)
     this[secret.showing] = true
   } else if (!show && this[secret.showing]) {
-    dom.clearContent(elem)
+    dom.clearContent(this)
     this[secret.showing] = false
   }
 }
