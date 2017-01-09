@@ -8,7 +8,7 @@ The `flow` middleware is responsible for controlling visual flow in the HTML vie
 - processes: element nodes
 - throws on: nothing
 - use as: component or content middleware
-- [docs](http://nx-framework/docs/middlewares/flow)
+- [docs](http://nx-framework.com/docs/middlewares/flow)
 
 ## Installation
 
