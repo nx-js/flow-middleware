@@ -3,6 +3,7 @@
 const dom = require('@nx-js/dom-util')
 
 const secret = {
+  inited: Symbol('flow initialized'),
   showing: Symbol('flow showing'),
   prevArray: Symbol('flow prevArray'),
   trackBy: Symbol('track by')
@@ -11,24 +12,31 @@ const secret = {
 function flow (elem) {
   if (elem.nodeType !== 1) return
 
-  const hasIf = elem.$hasAttribute('if')
-  const hasRepeat = elem.$hasAttribute('repeat')
-
-  if (hasIf && hasRepeat) {
-    throw new Error('if and repeat attributes can not be used on the same element')
-  }
-  if (hasIf || hasRepeat) {
-    dom.normalizeContent(elem)
-    dom.extractContent(elem)
-  }
-
-  elem.$attribute('if', ifAttribute)
-  elem.$attribute('track-by', trackByAttribute)
-  elem.$attribute('repeat', repeatAttribute)
+  elem.$attribute('if', {
+    init: initFlow,
+    handler: ifAttribute
+  })
+  elem.$attribute('track-by', {
+    handler: trackByAttribute,
+    type: ['', '$']
+  })
+  elem.$attribute('repeat', {
+    init: initFlow,
+    handler: repeatAttribute
+  })
 }
 flow.$name = 'flow'
 flow.$require = ['attributes']
 module.exports = flow
+
+function initFlow () {
+  if (this[secret.inited]) {
+    throw new Error('The if and repeat attributes can not be used on the same element')
+  }
+  dom.normalizeContent(this)
+  dom.extractContent(this)
+  this[secret.inited] = true
+}
 
 function ifAttribute (show) {
   if (show && !this[secret.showing]) {
