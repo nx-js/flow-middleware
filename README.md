@@ -5,9 +5,8 @@ The `flow` middleware is responsible for controlling visual flow in the HTML vie
 - name: flow
 - middleware dependencies: [attributes](https://github.com/nx-js/attributes-middleware)
 - all middleware dependencies: [observe](https://github.com/nx-js/observe-middleware), [attributes](https://github.com/nx-js/attributes-middleware)
-- processes: element nodes
-- throws on: nothing
-- use as: component or content middleware
+- type: component or content middleware
+- ignores: text nodes
 - [docs](http://nx-framework.com/docs/middlewares/flow)
 
 ## Installation
